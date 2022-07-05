@@ -35,16 +35,17 @@ export default function Login(props){
     }
         
     return(
-        <div>
-
+        <div className="center">
+            <h1 className="loginsignupheading">Login</h1>
             <form onSubmit={handleSubmit}>
-            <div className="form-group">
+
+            <div className="form-group col-md-6">
                 <label htmlFor="username1">Username</label>
                 <input type="text" name="username" className="form-control" id="username1" aria-describedby="emailHelp" placeholder="Enter username"/>
                 
             </div>
-            <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Password</label>
+            <div className="form-group col-md-6">
+                <label htmlFor="exampleInputPassword1" >Password</label>
                 <input type="password" name = "password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
                 <small id="emailHelp" className="form-text text-muted">We'll never share your username or password with anyone else.</small>
             </div>
@@ -58,6 +59,7 @@ export default function Login(props){
                 Password: <input type='password' name='password'/><br/>
                 <input type='submit' value='Login'/>
             </form> */}
+            
         </div>
     );
 }
