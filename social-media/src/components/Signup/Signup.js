@@ -27,9 +27,9 @@ export default function Signup(props){
         
     return(
         
-        <div>
-
-        
+        <div className="center">
+            
+            <h1 className="loginsignupheading">Signup</h1>
             <form onSubmit={handleSubmit}>
                 
             <div className="form-row">
@@ -37,6 +37,9 @@ export default function Signup(props){
                 <label htmlFor="username2">Username</label>
                 <input type="text" className="form-control" id="username2" placeholder="Username" />
                 </div>
+                
+            </div>
+            <div className="form-row">
                 <div className="form-group col-md-6">
                 <label htmlFor="email2">Email</label>
                 <input type="email" className="form-control" id="email2" placeholder="Email" />
