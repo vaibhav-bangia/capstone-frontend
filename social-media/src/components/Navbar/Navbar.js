@@ -26,10 +26,10 @@ export default function Navbar(props) {
             
             <nav className='navbar navbar-dark bg-dark nb navbar-expand-md justify-content-center'>
                 {/* Name of website */}
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h3 class="animate-charcter"> Social Zone</h3>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12 text-center">
+                        <h3 className="animate-charcter"> Social Zone</h3>
                     </div>
                 </div>
                 {/* Name of website code ends */}
@@ -60,7 +60,7 @@ export default function Navbar(props) {
                 { props.isLoggedIn &&
                     <div className='navbar-brand'>
                         {/* <img src='http://bitly.ws/sDmM' alt='Hello There Image'/> */}
-                        <img class="profile-pic" src='http://bitly.ws/sDmR' alt='HeYY' />
+                        <img className="profile-pic" src='http://bitly.ws/sDmR' alt='HeYY' />
                         {/* <img src='http://bitly.ws/sDmR' alt='Hello There Image'/> */}
                     </div>
                 }</li>

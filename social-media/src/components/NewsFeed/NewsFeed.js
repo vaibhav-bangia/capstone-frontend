@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
 
+import Post from "../Post/Post.tsx";
+
 //import './Posts.css'
 //import { useNavigate } from "react-router-dom";
+
 
 export default function NewsFeed(props){
     //const navigate = useNavigate();
@@ -12,35 +15,7 @@ export default function NewsFeed(props){
     async function getData(){
         
         console.log("NewsFeed Page");
-        //console.log(props.userId);
 
-        // let userIdObj = {
-        //     userId: props.userId
-        // };
-
-
-        // let url = 'http://localhost:3001/posts';
-        // let options = {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(userIdObj)
-        // }
-        // //console.log("fetch scheduled");
-        // let res = await fetch(url, options);
-        // let data = await res.json();
-        // //console.log(data);
-        // setPostsData({flag: true, posData: data});
-        
-
-
-        // let url = 'http://localhost:3001/posts';
-        
-        // let res = await fetch(url);
-        // let data = await res.json();
-        // console.log(data);
-        // setPostsData({flag: true, posData: data})
     }
     
 
@@ -64,6 +39,9 @@ export default function NewsFeed(props){
                     </ul>
                 </div>
             }
+
+            <Post></Post>
+
         </div>
     );
 }
