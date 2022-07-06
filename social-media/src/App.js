@@ -8,6 +8,8 @@ import { useState } from 'react';
 import Login from './components/Login/Login';
 import Navbar from './components/Navbar/Navbar';
 import Signup from './components/Signup/Signup';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import NewsFeed from './components/NewsFeed/NewsFeed';
 
 
 function App() {
@@ -27,6 +29,7 @@ function App() {
           
           <Route exact path = '/signup' element = {<Signup/>}/>
           
+          <Route exact path = '/newsfeed' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><NewsFeed userId = {userId}/></ProtectedRoute>}/>
           
           {/* <Route exact path = '/removeposts' element = {<RemovePosts/>}/> */}
         </Routes>

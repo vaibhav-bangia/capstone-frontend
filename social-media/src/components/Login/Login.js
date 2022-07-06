@@ -6,31 +6,11 @@ export default function Login(props){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log('Logging In');
 
-        let user = {
-            username: event.target.elements.username.value,
-            password: event.target.elements.password.value
-        }
-        let url = 'http://localhost:3001/login';
-        let options = {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        }
-        let res = await fetch(url, options);
-        let data = await res.json();
-        //console.log(data);
-        if(data.flag){
-            //console.log(data.msg);
-            props.setIsLoggedIn(true);
-            props.setUserId(data.userId);
-            navigate('/posts');
-        }
-        else{
-            alert(data.msg);
-        }
+        props.setIsLoggedIn(true);
+        navigate('/newsfeed');
+
         //console.log(data);
     }
         
