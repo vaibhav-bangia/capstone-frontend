@@ -21,29 +21,34 @@ export default function Navbar(props) {
 
     return (
         <div>
-            
-            <nav className='navbar navbar-dark bg-dark nb'>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h3 class="animate-charcter"> Social Zone</h3>
+            <nav className='navbar navbar-dark bg-dark nb navbar-expand-md justify-content-center'>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h3 class="animate-charcter"> Social Zone</h3>
+                        </div>
                     </div>
                 </div>
-            </div>
                 {/* <a class="navbar-brand container" href="#">Social Zone</a> */}
-                {!props.isLoggedIn &&
-                    <Link to='/' className='navbar-brand'><button type="button" className="navb btn btn-outline-info">Login Page</button></Link>
-                }
+                <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+                    
+                    <li>
+                    {!props.isLoggedIn &&
+                        <Link to='/' className='navbar-brand'><button type="button" className="navb btn btn-outline-info">Login Page</button></Link>
+                    }</li>
+                    <li>
+                    {!props.isLoggedIn &&
+                        <Link to='/signup' className='navbar-brand'><button type="button" className="navb btn btn-outline-info">Signup Page</button></Link>
+                    }</li>
 
-                {!props.isLoggedIn &&
-                    <Link to='/signup' className='navbar-brand'><button type="button" className="navb btn btn-outline-info">Signup Page</button></Link>
-                }
+                    {/* <Link to = '/removeposts'><button>Remove Posts</button></Link> */}
+                    <li>
+                    {props.isLoggedIn &&
+                        <div className='nav-item' ><button onClick={handleClick} type="button" className="navb btn btn-outline-danger">Log Out</button></div>
+                    }</li>
+                </ul>
 
-                {/* <Link to = '/removeposts'><button>Remove Posts</button></Link> */}
-
-                {props.isLoggedIn &&
-                    <div className='navbar-brand' ><button onClick={handleClick} type="button" className="navb btn btn-outline-danger">Log Out</button></div>
-                }
+                
             </nav>
         </div>
     );
