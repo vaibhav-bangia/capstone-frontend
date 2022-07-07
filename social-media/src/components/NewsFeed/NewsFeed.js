@@ -45,6 +45,14 @@ export default function NewsFeed(props) {
                 <Post imgSrc="http://bitly.ws/sDBC" />
 
                 <Post imgSrc="http://bitly.ws/sDAt" />
+
+                <Post imgSrc="http://bitly.ws/sEIx"/>
+
+                <Post imgSrc="http://bitly.ws/sEIB"/>
+
+                <Post imgSrc="http://bitly.ws/sEIF"/>
+
+                
             </div>
 
 
