@@ -1,36 +1,37 @@
 import { Link } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
+import './NewsFeed.css'
 import Post from "../Post/Post.tsx";
 
 //import './Posts.css'
 //import { useNavigate } from "react-router-dom";
 
 
-export default function NewsFeed(props){
+export default function NewsFeed(props) {
     //const navigate = useNavigate();
 
-    const [postsData, setPostsData] = useState({flag: false, posData: null});
+    const [postsData, setPostsData] = useState({ flag: false, posData: null });
 
-    async function getData(){
-        
+    async function getData() {
+
         console.log("NewsFeed Page");
 
     }
-    
+
 
     //the call back function cannot be async, thus we make a new async function inside it
     useEffect(() => {
         //console.log("useEff Called");
         getData();
-    },[]);
+    }, []);
 
-    return(
-        <div>
-            <h1>Your Posts</h1>
+    return (
+        <div className="post-background">
+            <h1 className="post-heading">Your Posts</h1>
             {/* conditional rendering */}
 
-            { postsData.flag && 
+            {postsData.flag &&
                 <div>
                     <ul className="list-group">
                         {postsData.posData.map((post) => {
@@ -40,7 +41,13 @@ export default function NewsFeed(props){
                 </div>
             }
 
-            <Post></Post>
+            <div className="flex-container">
+                <Post imgSrc="http://bitly.ws/sDBC" />
+
+                <Post imgSrc="http://bitly.ws/sDAt" />
+            </div>
+
+
 
         </div>
     );

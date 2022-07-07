@@ -10,6 +10,8 @@ import Navbar from './components/Navbar/Navbar';
 import Signup from './components/Signup/Signup';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import NewsFeed from './components/NewsFeed/NewsFeed';
+import AppNavBar from './components/AppNavBar/AppNavBar';
+import Following from './components/Following/Following';
 
 
 function App() {
@@ -21,7 +23,10 @@ function App() {
     <Router>
       <div>
         {/* Navbar should be unconditional */}
-        <Navbar isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>
+        {/* <Navbar isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/> */}
+        <AppNavBar isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>
+        
+        
 
         {/* Conditional rendering from here */}
         <Routes>
@@ -31,6 +36,7 @@ function App() {
           
           <Route exact path = '/newsfeed' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><NewsFeed userId = {userId}/></ProtectedRoute>}/>
           
+          <Route exact path = '/following' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><Following userId = {userId}/></ProtectedRoute>}/>
           {/* <Route exact path = '/removeposts' element = {<RemovePosts/>}/> */}
         </Routes>
       </div>

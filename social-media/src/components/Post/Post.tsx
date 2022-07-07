@@ -16,11 +16,22 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 
 import CommentIcon from '@mui/icons-material/Comment';
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import { autocompleteClasses, CardActionArea } from '@mui/material';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -37,31 +48,43 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function Post() {
-  const [expanded, setExpanded] = React.useState(false);
 
+
+// const styles ={
+//     height: 140,     
+//     // width: '33%',
+//     // marginLeft: '33%'
+// };
+
+
+export default function Post(props) {
+ // const [expanded, setExpanded] = React.useState(false);
+
+  const [like, setLike] = React.useState(false);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleToggle = () => {
+    setLike(!like);
+  };
  
 
   // const handleExpandClick = () => {
   //   setExpanded(!expanded);
   // };
 
-  const modalStyle = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
 
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className='shadow-box-example z-depth-5' sx={{ maxWidth: 345, marginLeft: "auto", marginRight: "auto", marginBlock: 5 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -76,12 +99,13 @@ export default function Post() {
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
       />
+      <CardActionArea>
       <CardMedia
         component="img"
-        height="194"
-        image="/static/images/cards/paella.jpg"
+        
+        image={props.imgSrc}
         alt="Paella dish"
-      />
+      /> </CardActionArea>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           This impressive paella is a perfect party dish and a fun meal to cook
@@ -90,15 +114,46 @@ export default function Post() {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites" onClick={handleToggle}>
+          { !like &&
+            <FavoriteBorderIcon   />
+          }
+
+          { like &&
+            <FavoriteIcon style ={{ color: "#fd1d1d"}} />
+          }
+          
         </IconButton>
         <IconButton aria-label="show comments">
-          <CommentIcon />
+          <CommentIcon style ={{ color: "dodgerblue"}} />
         </IconButton>
-        <IconButton>
-          <AddCommentIcon  />
+
+        {/* Code for adding the comment using the MUI Dialog */}
+        <IconButton sx={{mx: "12rem"}} onClick={handleClickOpen}>
+
+          <AddCommentIcon style ={{ color: "black"}} />
         </IconButton>
+          <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+          <DialogTitle>Add Comment</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Enter Your Comment Below 
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Comment"
+              type="email"
+              fullWidth
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Add Comment</Button>
+          </DialogActions>
+        </Dialog>
       </CardActions>
       
     </Card>
