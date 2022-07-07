@@ -12,6 +12,8 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import NewsFeed from './components/NewsFeed/NewsFeed';
 import AppNavBar from './components/AppNavBar/AppNavBar';
 import Following from './components/Following/Following';
+import Follower from './components/Follower/Follower';
+import FileUploadPage from './components/FileUploadPage/FileUploadPage';
 
 
 function App() {
@@ -37,7 +39,12 @@ function App() {
           <Route exact path = '/newsfeed' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><NewsFeed userId = {userId}/></ProtectedRoute>}/>
           
           <Route exact path = '/following' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><Following userId = {userId}/></ProtectedRoute>}/>
+
+          <Route exact path = '/follower' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><Follower userId = {userId}/></ProtectedRoute>}/>
           {/* <Route exact path = '/removeposts' element = {<RemovePosts/>}/> */}
+
+          <Route exact path = '/fileupload' element = {<FileUploadPage userId = {userId}/>} />
+
         </Routes>
       </div>
     </Router>

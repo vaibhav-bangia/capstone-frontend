@@ -60,8 +60,10 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function Post(props) {
  // const [expanded, setExpanded] = React.useState(false);
 
+ //state variable for liking a post
   const [like, setLike] = React.useState(false);
 
+  //state variable for adding a post, i.e. for opening the dialog component
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -72,6 +74,7 @@ export default function Post(props) {
     setOpen(false);
   };
 
+  //for liking a post
   const handleToggle = () => {
     setLike(!like);
   };

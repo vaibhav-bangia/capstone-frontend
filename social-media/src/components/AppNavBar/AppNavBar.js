@@ -11,11 +11,44 @@ import { useNavigate } from 'react-router-dom';
 
 import './AppNavBar.css'
 
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+
+import Tooltip from '@mui/material/Tooltip';
+
+
+
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
+
+
+
 
 
 export default function AppNavBar(props) {
 
   const navigate = useNavigate()
+
+
+
+  //code and state variable for adding a post
+  const [addPostOpen, setAddPostOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setAddPostOpen(true);
+  };
+
+  const handleClose = () => {
+    setAddPostOpen(false);
+  };
+
 
 
   const handleClickLogin = async (event) => {
@@ -35,21 +68,54 @@ export default function AppNavBar(props) {
     navigate('/following');
   }
 
+  const handleClickFollower = async (event) => {
+    navigate('/follower');
+  }
+  
+
   return (
     <Box sx={{ flexGrow: 1, marginBottom: 3 }}>
       <AppBar position="sticky" style={{backgroundColor: "#18978F"}}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+
+          <Tooltip title="Add a Post">
+            <IconButton onClick={handleClickOpen}
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <AddAPhotoIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Dialog open={addPostOpen} onClose={handleClose} fullWidth maxWidth="sm">
+          <DialogTitle>Add Comment</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Enter Your Comment Below 
+            </DialogContentText>
+            
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Comment"
+              type="email"
+              fullWidth
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Add Post</Button>
+          </DialogActions>
+        </Dialog>
+
+
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            <h3 className="animate-charcter"> Social Zone</h3>
           </Typography>
           {!props.isLoggedIn &&
             <Button color='inherit' onClick={handleClickLogin} >Login</Button>
@@ -61,7 +127,13 @@ export default function AppNavBar(props) {
 
           {props.isLoggedIn &&
             
-            <Button  sx={{ mx: 10}} variant="contained" style={{color: "#3330E4" , backgroundColor: '#9DD6DF'}} onClick={handleClickFollowing} >Following List</Button>
+            <Button  sx={{ mx: 6}} variant="contained" style={{color: "#3330E4" , backgroundColor: '#9DD6DF'}} onClick={handleClickFollowing} >Following</Button>
+
+          }
+
+          {props.isLoggedIn &&
+            
+            <Button  sx={{ mx: 6}} variant="contained" style={{color: "#3330E4" , backgroundColor: '#9DD6DF'}} onClick={handleClickFollower} >Followers</Button>
 
           }
 
