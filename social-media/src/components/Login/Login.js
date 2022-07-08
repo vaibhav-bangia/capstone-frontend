@@ -39,9 +39,35 @@ export default function Login(props){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setSuccess(true);
-        props.setIsLoggedIn(true);
-        navigate('/newsfeed');
+        
+        let user = {
+            email: event.target.elements.email.value,
+            password: event.target.elements.password.value
+        }
+
+        let url = 'http://localhost:8080/users/signin';
+        let options = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }
+        
+        let res = await fetch(url,options);
+        let data = await res.json();
+        console.log(data);
+
+        if(data.status === 'success'){
+            props.setIsLoggedIn(true);
+
+            //code for showing success snackbar to be done here
+
+            navigate('/newsfeed');
+        }
+        else{
+            setError(true);
+        }
         //console.log('Logging In');
 
 
@@ -82,8 +108,8 @@ export default function Login(props){
             <form onSubmit={handleSubmit}>
 
             <div className="form-group col-md-6">
-                <label htmlFor="username1">Username</label>
-                <input type="text" name="username" className="form-control" id="username1" aria-describedby="emailHelp" placeholder="Enter username"/>
+                <label htmlFor="username1">Email</label>
+                <input type="text" name="email" className="form-control" id="username1" aria-describedby="emailHelp" placeholder="Enter username"/>
                 
             </div>
             <div className="form-group col-md-6">
