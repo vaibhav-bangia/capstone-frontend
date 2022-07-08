@@ -59,6 +59,9 @@ export default function Login(props){
         console.log(data);
 
         if(data.status === 'success'){
+
+            props.setUserId(data.userdetail)
+            console.log(data.userdetail);
             props.setIsLoggedIn(true);
 
             //code for showing success snackbar to be done here

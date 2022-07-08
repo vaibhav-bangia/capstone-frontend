@@ -122,6 +122,35 @@ export default function AppNavBar(props) {
     if(event.keyCode == 13){
       console.log(event.target.value);
       let userName = event.target.value;
+      let userObj = {
+        id: userName
+      }
+
+      let url = 'http://localhost:8080/getposts';
+      let options = {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(userObj)
+    }
+    
+    let res = await fetch(url,options);
+    let data = await res.json();
+    console.log(data);
+
+    if(data.status === 'success'){
+        //props.setIsLoggedIn(true);
+        console.log("Posts Displayed");
+
+        //code for showing success snackbar to be done here
+
+        //navigate('/newsfeed');
+    }
+    else{
+        console.log("Some Error");
+        //setError(true);
+    }
 
       
       //setSearchValue(event.target.value);

@@ -17,6 +17,39 @@ export default function NewsFeed(props) {
 
         console.log("NewsFeed Page");
 
+        let userName = props.userId;
+        let userObj = {
+            id: userName
+        }
+
+        let url = 'http://localhost:8080/feed';
+        let options = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(userObj)
+        }
+        
+        let res = await fetch(url,options);
+        let data = await res.json();
+        console.log(data);
+
+        if(data.status === 'success'){
+            //props.setIsLoggedIn(true);
+            console.log("Newsfeed Displayed");
+            setPostsData({flag: true, posData: data.userdetail});
+
+            //code for showing success snackbar to be done here
+
+            //navigate('/newsfeed');
+        }
+        else{
+            console.log("Some Error in Newsfeed");
+            //setError(true);
+        }
+
+
     }
 
 
@@ -29,28 +62,34 @@ export default function NewsFeed(props) {
     return (
         <div className="post-background">
             <h1 className="post-heading">Your Feed</h1>
-            {/* conditional rendering */}
-
-            {postsData.flag &&
-                <div>
-                    <ul className="list-group">
-                        {postsData.posData.map((post) => {
-                            return <li className="list-margin list-group-item list-group-item-action list-group-item-danger" key={post.postId} idd={post.postId}>{post.postId + " -> " + post.postTitle + " => "} <Link to={`/posts/${post.postId}`}><i>click for details</i></Link></li>
-                        })}
-                    </ul>
-                </div>
-            }
+            
 
             <div className="flex-container">
-                <Post imgSrc="http://bitly.ws/sDBC" />
 
-                <Post imgSrc="http://bitly.ws/sDAt" />
+                        { postsData.flag &&
+                            <div>
+                            {postsData.posData.map((post) => {
 
-                <Post imgSrc="http://bitly.ws/sEIx"/>
 
-                <Post imgSrc="http://bitly.ws/sEIB"/>
 
-                <Post imgSrc="http://bitly.ws/sEIF"/>
+                                //return <li className="list-margin list-group-item list-group-item-action list-group-item-danger" key={post.postId} idd={post.postId}>{post.postId + " -> " + post.postTitle + " => "} <Link to={`/posts/${post.postId}`}><i>click for details</i></Link></li>
+                            
+                            return (<Post key={post.posts.postid} postSender={post.userdetails.username} caption={post.posts.caption}  imgSrc="http://bitly.ws/sDBC" />)
+                            
+                            
+                            })}
+                            </div>
+                        }
+
+                {/* <Post userId = {props.userId} imgSrc="http://bitly.ws/sDBC" />
+
+                <Post userId = {props.userId} imgSrc="http://bitly.ws/sDAt" />
+
+                <Post userId = {props.userId} imgSrc="http://bitly.ws/sEIx"/>
+
+                <Post userId = {props.userId} imgSrc="http://bitly.ws/sEIB"/>
+
+                <Post userId = {props.userId} imgSrc="http://bitly.ws/sEIF"/> */}
 
                 
             </div>

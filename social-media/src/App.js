@@ -19,7 +19,7 @@ import MyProfile from './components/MyProfile/MyProfile';
 
 function App() {
 
-  const [userId, setUserId] = useState(-1);
+  const [userId, setUserId] = useState("");
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (

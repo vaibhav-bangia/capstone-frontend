@@ -63,6 +63,7 @@ export default function Post(props) {
  //state variable for liking a post
   const [like, setLike] = React.useState(false);
 
+
   //state variable for adding a post, i.e. for opening the dialog component
   const [open, setOpen] = React.useState(false);
 
@@ -99,7 +100,7 @@ export default function Post(props) {
         //     <MoreVertIcon />
         //   </IconButton>
         // }
-        title="Shrimp and Chorizo Paella"
+        title={props.postSender}
         subheader="September 14, 2016"
       />
       <CardActionArea>
@@ -111,9 +112,9 @@ export default function Post(props) {
       /> </CardActionArea>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
+          
+          {props.caption}
+
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
