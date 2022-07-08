@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import './NewsFeed.css'
+//import './NewsFeed.css'
 import Post from "../Post/Post.tsx";
 
 //import './Posts.css'
 //import { useNavigate } from "react-router-dom";
 
 
-export default function NewsFeed(props) {
+export default function MyProfile(props) {
     //const navigate = useNavigate();
 
     const [postsData, setPostsData] = useState({ flag: false, posData: null });
@@ -28,7 +28,7 @@ export default function NewsFeed(props) {
 
     return (
         <div className="post-background">
-            <h1 className="post-heading">Your Feed</h1>
+            <h1 className="post-heading">My Posts</h1>
             {/* conditional rendering */}
 
             {postsData.flag &&
@@ -59,4 +59,4 @@ export default function NewsFeed(props) {
 
         </div>
     );
-}
+}                            

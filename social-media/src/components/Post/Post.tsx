@@ -94,11 +94,11 @@ export default function Post(props) {
             R
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
       />

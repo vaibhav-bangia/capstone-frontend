@@ -27,25 +27,25 @@ export default function FileUploadPage(props){
 	};
 
     //function for uploading the file
-    const handleUploadClick = event => {
-        console.log();
-        var file = event.target.files[0];
-        const reader = new FileReader();
-        var url = reader.readAsDataURL(file);
+    // const handleUploadClick = event => {
+    //     console.log();
+    //     var file = event.target.files[0];
+    //     const reader = new FileReader();
+    //     var url = reader.readAsDataURL(file);
     
-        reader.onloadend = function(e) {
-          this.setState({
-            selectedFile: [reader.result]
-          });
-        }.bind(this);
-        console.log(url); // Would see a path?
+    //     reader.onloadend = function(e) {
+    //       this.setState({
+    //         selectedFile: [reader.result]
+    //       });
+    //     }.bind(this);
+    //     console.log(url); // Would see a path?
     
-        this.setState({
-          mainState: "uploaded",
-          selectedFile: event.target.files[0],
-          imageUploaded: 1
-        });
-      };
+    //     this.setState({
+    //       mainState: "uploaded",
+    //       selectedFile: event.target.files[0],
+    //       imageUploaded: 1
+    //     });
+    //   };
 
 	const handleSubmission = () => {
 		const formData = new FormData();
@@ -78,7 +78,7 @@ export default function FileUploadPage(props){
               className='input-image'
               multiple
               type="file"
-              onChange={handleUploadClick}
+              onChange={changeHandler}
             />
             <label htmlFor="contained-button-file">
               <Fab component="span"
@@ -88,6 +88,20 @@ export default function FileUploadPage(props){
                 <AddPhotoAlternateIcon style = {{ color: "dodgerblue" }}/>
               </Fab>
             </label>
+
+			{isFilePicked ? (
+				<div>
+					<p>Filename: {selectedFile.name}</p>
+					<p>Filetype: {selectedFile.type}</p>
+					<p>Size in bytes: {selectedFile.size}</p>
+					<p>
+						lastModifiedDate:{' '}
+						{selectedFile.lastModifiedDate.toLocaleDateString()}
+					</p>
+				</div>
+			) : (
+				<p>Select a file to show details</p>
+			)}
 
 
 			{/* <input type="file" name="file" onChange={changeHandler} />
