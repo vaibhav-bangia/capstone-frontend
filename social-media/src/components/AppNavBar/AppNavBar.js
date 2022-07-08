@@ -82,7 +82,7 @@ export default function AppNavBar(props) {
 
   const navigate = useNavigate()
 
-
+  //const [searchValue, setSearchValue] = React.useState("ghost")//State variable for PhoneInput
 
   //code and state variable for adding a post
   const [addPostOpen, setAddPostOpen] = React.useState(false);
@@ -116,6 +116,20 @@ export default function AppNavBar(props) {
 
   const handleClickFollower = async (event) => {
     navigate('/follower');
+  }
+
+  const handleKeyPress = async (event) => {
+    if(event.keyCode == 13){
+      console.log(event.target.value);
+      let userName = event.target.value;
+
+      
+      //setSearchValue(event.target.value);
+
+      
+
+    }
+    
   }
   
 
@@ -177,9 +191,13 @@ export default function AppNavBar(props) {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
+
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
-              />
+                onKeyDown = {handleKeyPress}>
+
+                </StyledInputBase>
+                
             </Search>
           }
 
