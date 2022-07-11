@@ -68,6 +68,48 @@ export default function FileUploadPage(props){
 				console.error('Error:', error);
 			});
 	};
+
+	const handleSubmissionForm = (e) => {
+		//e.preventDefault();
+		
+		//const form = document.getElementById('formPost')
+		const formData = new FormData();
+		formData.append("user", "abc");
+		formData.append("postdata", selectedFile);
+		formData.append("caption", "16th Post");
+
+
+		let formDataObject = Object.fromEntries(formData.entries());
+
+		let formDataJsonString = JSON.stringify(formDataObject);
+
+		
+		//console.log([...formData]);
+		// formData.append('postdata', "http://bitly.ws/sDBC");
+		// formData.append('caption', "13th Neww");
+		//formData.append('File', selectedFile);
+
+		//console.log([...formData]);
+
+		fetch(
+			'http://localhost:8080/insertpost',
+			{
+				method: 'POST',
+				body: formDataJsonString,
+				headers: {
+					'Content-Type': 'application/json'
+				  }
+				//mode: 'no-cors',
+			}
+		)
+			.then((response) => response.json())
+			.then((result) => {
+				console.log('Success:', result);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+	};
 	
 	return(
    <div>
@@ -121,7 +163,8 @@ export default function FileUploadPage(props){
 			)} */}
             
 			<div>
-				<button onClick={handleSubmission}>Submit</button>
+					{/* <input name="id" type = "text" /> */}
+					<button onClick={handleSubmissionForm}>Submit</button>
 			</div>
 		</div>
 	)

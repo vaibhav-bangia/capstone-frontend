@@ -199,7 +199,7 @@ export default function AppNavBar(props) {
     console.log("Here is the caption ->",textFieldValue);
     //console.log(file64StringWithType);
     console.log(props.userId);
-    console.log(selectedFile.type);
+    //console.log(selectedFile.type);
 
     //let compressedImg64 = atob(file64StringWithType);
 
@@ -207,11 +207,11 @@ export default function AppNavBar(props) {
     //myFiles['picture'] = `data:${file.type};base64,${btoa(event.target.result)}`
 
     //let compressedImg64 = "http://bitly.ws/sDBC";
-    console.log(file64StringWithType);
+    //console.log(file64StringWithType);
       //let userName = event.target.value;
       let postObj = {
         user: props.userId,
-        postdata: file64StringWithType,
+        postdata: "https://picsum.photos/200/300",
         caption: textFieldValue
       }
 
@@ -301,7 +301,7 @@ export default function AppNavBar(props) {
               autoFocus
               margin="dense"
               id="name"
-              label="Comment"
+              label="Post Caption"
               type="email"
               fullWidth
               variant="standard"
@@ -319,17 +319,17 @@ export default function AppNavBar(props) {
               // onChange={changeHandler}
               onChange={onUploadFileChange}
             />
-            <label htmlFor="contained-button-file">
+            {/* <label htmlFor="contained-button-file">
               
             <Tooltip title="Upload image here">
               <Fab component="span"
             //    className={classes.button}
                 >
 
-                <AddPhotoAlternateIcon style = {{ color: "dodgerblue" }}/>
+                <AddPhotoAlternateIcon className='input-image' style = {{ color: "dodgerblue" }}/>
               </Fab>
               </Tooltip>
-            </label>
+            </label> */}
 
 
 
@@ -359,7 +359,7 @@ export default function AppNavBar(props) {
               </SearchIconWrapper>
               <StyledInputBase
 
-                placeholder="Search…"
+                placeholder="Search username…"
                 inputProps={{ 'aria-label': 'search' }}
                 onKeyDown = {handleKeyPress}>
 
