@@ -6,8 +6,16 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
+
+import  {useState} from 'react';
+
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import Fab from "@mui/material/Fab";
+
+import imageCompression from "browser-image-compression";
 
 import './AppNavBar.css'
 
@@ -80,6 +88,74 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function AppNavBar(props) {
 
+  //state variables and code for file(image) upload
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
+
+  const [file, setFile] = useState(null);
+  const [file64String, setFile64String] = useState(null);
+  const [file64StringWithType, setFile64StringWithType] = useState(null);
+
+
+  //code for uploading the image and storing it in backend after converting it to base64 String
+  function onUploadFileChange(e) {
+    setSelectedFile(e.target.files[0]);
+
+    setFile64String(null);
+    if (e.target.files < 1 || !e.target.validity.valid) {
+      return;
+    }
+
+    compressImageFile(e);
+  }
+
+  function fileToBase64(file, cb) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      cb(null, reader.result);
+    };
+    reader.onerror = function (error) {
+      cb(error, null);
+    };
+  }
+
+  async function compressImageFile(event) {
+    const imageFile = event.target.files[0];
+
+    const options = {
+      maxWidthOrHeight: 250,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(imageFile, options);
+      // input file is compressed in compressedFile, now write further logic here
+
+      fileToBase64(compressedFile, (err, result) => {
+        if (result) {
+          setFile(result);
+          //   console.log(file);
+          //   console.log(String(result.split(",")[1]));
+          setFile64StringWithType(result);
+          setFile64String(String(result.split(",")[1]));
+        }
+      });
+    } catch (error) {
+      setFile64String(null);
+      // console.log(error);
+    }
+  }
+
+
+	const changeHandler = (event) => {
+		setSelectedFile(event.target.files[0]);
+		setIsFilePicked(true);
+	};
+
+
+  //state variable for Add a post's caption
+  const [textFieldValue, setTextFieldValue] = useState("");
+
   const navigate = useNavigate()
 
   //const [searchValue, setSearchValue] = React.useState("ghost")//State variable for PhoneInput
@@ -118,39 +194,65 @@ export default function AppNavBar(props) {
     navigate('/follower');
   }
 
-  const handleKeyPress = async (event) => {
-    if(event.keyCode == 13){
-      console.log(event.target.value);
-      let userName = event.target.value;
-      let userObj = {
-        id: userName
+  const handleAddPost = async (event) => {
+
+    console.log("Here is the caption ->",textFieldValue);
+    //console.log(file64StringWithType);
+    console.log(props.userId);
+    console.log(selectedFile.type);
+
+    //let compressedImg64 = atob(file64StringWithType);
+
+    //let compressedImg64 = `data:${selectedFile.type};base64,${file64StringWithType}`
+    //myFiles['picture'] = `data:${file.type};base64,${btoa(event.target.result)}`
+
+    //let compressedImg64 = "http://bitly.ws/sDBC";
+    console.log(file64StringWithType);
+      //let userName = event.target.value;
+      let postObj = {
+        user: props.userId,
+        postdata: file64StringWithType,
+        caption: textFieldValue
       }
 
-      let url = 'http://localhost:8080/getposts';
+      let url = 'http://localhost:8080/insertpost';
       let options = {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
         },
-        body: JSON.stringify(userObj)
+        body: JSON.stringify(postObj)
     }
-    
+
     let res = await fetch(url,options);
     let data = await res.json();
     console.log(data);
 
-    if(data.status === 'success'){
+    if(data.status === 'Success'){
         //props.setIsLoggedIn(true);
-        console.log("Posts Displayed");
-
+        console.log("Post added successfully");
+        // props.setNewsFeedModified(true);
+        //<Navigate to='/newsfeed' replace={true}/>
+        //navigate('/newsfeed');
         //code for showing success snackbar to be done here
 
         //navigate('/newsfeed');
     }
     else{
-        console.log("Some Error");
+        console.log("Some Error: Post can't be added");
         //setError(true);
     }
+  }
+
+  const handleTextChange = async(event) => {
+    setTextFieldValue(event.target.value);
+  }
+
+  const handleKeyPress = async (event) => {
+    if(event.keyCode === 13){
+      console.log(event.target.value);
+      let userName = event.target.value;
+      navigate(`/newuserprofile/${userName}`);
 
       
       //setSearchValue(event.target.value);
@@ -164,9 +266,17 @@ export default function AppNavBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1, marginBottom: 3 }}>
+
+        {/* {file64String !== null ? (
+          <img src={file64StringWithType} alt="chosen" />
+        ) : (
+          <span></span>
+        )} */}
+
       <AppBar position="sticky" style={{backgroundColor: "#18978F"}}>
         <Toolbar>
 
+        {   props.isLoggedIn &&
           <Tooltip title="Add a Post">
             <IconButton onClick={handleClickOpen}
               size="large"
@@ -178,12 +288,13 @@ export default function AppNavBar(props) {
               <AddAPhotoIcon />
             </IconButton>
           </Tooltip>
+        }
 
           <Dialog open={addPostOpen} onClose={handleClose} fullWidth maxWidth="sm">
-          <DialogTitle>Add Comment</DialogTitle>
+          <DialogTitle>Add Post</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Enter Your Comment Below 
+              Enter Your Caption Below 
             </DialogContentText>
             
             <TextField
@@ -194,11 +305,38 @@ export default function AppNavBar(props) {
               type="email"
               fullWidth
               variant="standard"
+              value={textFieldValue}
+              onChange={handleTextChange}
             />
+
+            <input
+              accept="image/*"
+            //   className={classes.input}
+              id="contained-button-file"
+              className='input-image'
+              multiple
+              type="file"
+              // onChange={changeHandler}
+              onChange={onUploadFileChange}
+            />
+            <label htmlFor="contained-button-file">
+              
+            <Tooltip title="Upload image here">
+              <Fab component="span"
+            //    className={classes.button}
+                >
+
+                <AddPhotoAlternateIcon style = {{ color: "dodgerblue" }}/>
+              </Fab>
+              </Tooltip>
+            </label>
+
+
+
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Add Post</Button>
+            <Button onClick={handleAddPost}>Add Post</Button>
           </DialogActions>
         </Dialog>
 

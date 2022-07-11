@@ -92,7 +92,7 @@ export default function Post(props) {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            {props.postSender[0]}
           </Avatar>
         }
         // action={
@@ -101,7 +101,8 @@ export default function Post(props) {
         //   </IconButton>
         // }
         title={props.postSender}
-        subheader="September 14, 2016"
+        // subheader="September 14, 2016"
+        subheader = {props.postTime}
       />
       <CardActionArea>
       <CardMedia

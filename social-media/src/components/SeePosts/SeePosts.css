@@ -1,0 +1,28 @@
+.flex-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* .flex-container > Post{
+    margin: 5%;
+} */
+
+
+.post-background-myprofile{
+    margin-top: -25px;
+    /* background: rgb(28,0,36);
+    background: linear-gradient(90deg, rgba(28,0,36,0.5219129888283438) 0%, rgba(67,19,156,1) 0%, rgba(0,212,255,0.7936216723017332) 100%);  */
+    /* background-color: #FAD9A1; */
+    background-color: #FBC5C5
+}
+
+.post-heading{
+    font-size: 70px;
+    font-weight: 600;
+    background-image: linear-gradient(to right, #553c9a, #b393d3);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;      
+}

@@ -1,28 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import './NewsFeed.css'
+import './SeePosts.css'
 import Post from "../Post/Post.tsx";
 
 //import './Posts.css'
 //import { useNavigate } from "react-router-dom";
 
 
-export default function NewsFeed(props) {
+export default function SeePosts(props) {
     //const navigate = useNavigate();
+
+    let params = useParams();
 
     const [postsData, setPostsData] = useState({ flag: false, posData: null });
 
     async function getData() {
 
-        console.log("NewsFeed Page");
+        console.log("MyProfile Posts Page");
 
-        let userName = props.userId;
+        let userName = params.userId;
         let userObj = {
             id: userName
         }
 
-        let url = 'http://localhost:8080/feed';
+        let url = 'http://localhost:8080/getposts';
         let options = {
             method: 'POST',
             headers: {
@@ -37,7 +39,7 @@ export default function NewsFeed(props) {
 
         if(data.status === 'success'){
             //props.setIsLoggedIn(true);
-            console.log("Newsfeed Displayed");
+            console.log("Posts of user displayed");
             setPostsData({flag: true, posData: data.userdetail});
 
             //code for showing success snackbar to be done here
@@ -45,7 +47,7 @@ export default function NewsFeed(props) {
             //navigate('/newsfeed');
         }
         else{
-            console.log("Some Error in Newsfeed");
+            console.log("Some error in displaying posts");
             //setError(true);
         }
 
@@ -60,8 +62,8 @@ export default function NewsFeed(props) {
     }, []);
 
     return (
-        <div className="post-background">
-            <h1 className="post-heading">Your Feed</h1>
+        <div className="post-background-myprofile">
+            <h1 className="post-heading">Your Posts</h1>
             
 
             <div className="flex-container">
@@ -74,7 +76,7 @@ export default function NewsFeed(props) {
 
                                 //return <li className="list-margin list-group-item list-group-item-action list-group-item-danger" key={post.postId} idd={post.postId}>{post.postId + " -> " + post.postTitle + " => "} <Link to={`/posts/${post.postId}`}><i>click for details</i></Link></li>
                             
-                            return (<Post key={post.posts.postid} postTime={post.posts.date} postSender={post.userdetails.username} caption={post.posts.caption}  imgSrc={post.posts.postdata} />)
+                            return (<Post key={post.postid} postTime={post.date} postSender={post.user} caption={post.caption}  imgSrc={post.postdata} />)
                             
                             
                             })}

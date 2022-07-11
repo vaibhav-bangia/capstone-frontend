@@ -15,9 +15,14 @@ import Following from './components/Following/Following';
 import Follower from './components/Follower/Follower';
 import FileUploadPage from './components/FileUploadPage/FileUploadPage';
 import MyProfile from './components/MyProfile/MyProfile';
+import UserProfile from './components/UserProfile/UserProfile';
+import SeePosts from './components/SeePosts/SeePosts';
+import NewUserProfile from './components/NewUserProfile/NewUserProfile';
 
 
 function App() {
+
+  // const [newsFeedModified, setNewsFeedModified] = useState(false);
 
   const [userId, setUserId] = useState("");
   
@@ -27,7 +32,7 @@ function App() {
       <div>
         {/* Navbar should be unconditional */}
         {/* <Navbar isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/> */}
-        <AppNavBar isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}/>
+        <AppNavBar isLoggedIn = {isLoggedIn} setIsLoggedIn = {setIsLoggedIn}  userId = {userId} setUserId ={setUserId}  />
         
         
 
@@ -44,6 +49,12 @@ function App() {
           <Route exact path = '/follower' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><Follower userId = {userId}/></ProtectedRoute>}/>
 
           <Route exact path = '/myprofile' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><MyProfile userId = {userId}/></ProtectedRoute>}/>
+
+          <Route exact path = '/userprofile/:userId' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><UserProfile/></ProtectedRoute>}/>
+
+          <Route exact path = '/seeposts/:userId' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><SeePosts/></ProtectedRoute>}/>
+
+          <Route exact path = '/newuserprofile/:userId' element = {<ProtectedRoute isLoggedIn = {isLoggedIn} ><NewUserProfile userId = {userId}/></ProtectedRoute>}/>
           {/* <Route exact path = '/removeposts' element = {<RemovePosts/>}/> */}
 
           <Route exact path = '/fileupload' element = {<FileUploadPage userId = {userId}/>} />

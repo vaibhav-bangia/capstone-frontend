@@ -89,6 +89,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import SaveIcon from '@mui/icons-material/Save';
 import { Button } from "@mui/material";
+import { Link } from 'react-router-dom';
 
 
 let postsData = [
@@ -130,12 +131,71 @@ const Demo = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
+
 export default function Following(props) {
+
+
+  const [followingData, setFollowingData] = React.useState({flag: false, folData: null});
+
+  async function getData() {
+
+      console.log("NewsFeed Page");
+
+      let userName = props.userId;
+      let userObj = {
+          id: userName
+      }
+
+      let url = 'http://localhost:8080/followerlist';
+      let options = {
+          method: 'POST',
+          headers: {
+              'content-type': 'application/json'
+          },
+          body: JSON.stringify(userObj)
+      }
+      
+      let res = await fetch(url,options);
+      let data = await res.json();
+      console.log(data);
+
+      if(data.status === 'success'){
+          //props.setIsLoggedIn(true);
+          console.log("Following List Displayed");
+
+          let tmpData = data.userdetail;
+
+          tmpData = tmpData.filter((item,
+            index) => tmpData.indexOf(item) === index);
+          
+            console.log(tmpData);
+
+
+          setFollowingData({flag: true, folData: tmpData});
+
+          //code for showing success snackbar to be done here
+
+          //navigate('/newsfeed');
+      }
+      else{
+          console.log("Some Error in Following List");
+          //console.log(data.message);
+      }
+
+
+  }
+
   const [dense, setDense] = React.useState(false);
 
   const handleUnfollow = async (event) =>{
     console.log(event.target.attributes.idd.value);
   }
+
+
+  React.useEffect(() => {
+    //console.log("useEff Called");
+    getData();
+  },[]);
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
@@ -149,28 +209,38 @@ export default function Following(props) {
           </Typography>
           <Demo>
             <List dense={dense}>
-              {postsData.map((post) => {
+            
+            { followingData.flag &&
+                
+              <div>
+              
+              {followingData.folData.map((user) => {
                 return (
                 <ListItem sx={{ m: 4}}
-                    key = {post.postId}
+                    key = {user}
                   secondaryAction={
                     
-                    <Button onClick={handleUnfollow} idd = {post.postId} startIcon={<PersonRemoveIcon />}>Unfollow</Button>
+                    <Button onClick={handleUnfollow} idd = {user} startIcon={<PersonRemoveIcon />}>Unfollow</Button>
                     
                   }
                 >
                   <ListItemAvatar>
                     <Avatar>
-                      <AccountCircleIcon />
+                      <Link to ={`/userprofile/${user}`}>
+                        <AccountCircleIcon />
+                      </Link>
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText
 
-                    primary = {post.postTitle}
+                    primary = {user}
                     // primary="Single-line item"
                   />
                 </ListItem>
                 )})}
+                </div>
+              
+              }
             </List>
           </Demo>
         </Grid>
