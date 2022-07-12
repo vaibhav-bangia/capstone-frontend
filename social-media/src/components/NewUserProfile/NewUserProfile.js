@@ -52,7 +52,7 @@ export default function NewUserProfile(props) {
            setIsFollowing(true);
         }
         else{
-            console.log("some error in following");
+            console.log("some error in following the user");
         }
 
     }
